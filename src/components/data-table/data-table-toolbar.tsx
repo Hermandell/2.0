@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { DataTableViewOptions } from "./data-table-view-options";
 import { DataTableFacetedFilter } from "./data-table-faceted-filter";
+import { DataTableDateFilter } from "./data-table-date-filter";
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;
@@ -50,6 +51,18 @@ export function DataTableToolbar<TData>({
               { value: "medium", label: "Medium" },
               { value: "high", label: "High" },
             ]}
+          />
+        )}
+         {table.getColumn("createdAt") && (
+          <DataTableDateFilter
+            column={table.getColumn("createdAt")}
+            title="Created Date"
+          />
+        )}
+        {table.getColumn("dueDate") && (
+          <DataTableDateFilter
+            column={table.getColumn("dueDate")}
+            title="Due Date"
           />
         )}
         {isFiltered && (

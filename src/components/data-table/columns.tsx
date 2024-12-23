@@ -1,12 +1,11 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-
+import { Task } from "@/data/tasks";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DataTableColumnHeader } from "./data-table-column-header";
 import { DataTableRowActions } from "./data-table-row-actions";
-import { Task } from "@/data/tasks";
 
 export const columns: ColumnDef<Task>[] = [
   {
@@ -82,6 +81,66 @@ export const columns: ColumnDef<Task>[] = [
     },
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id));
+    },
+  },
+  {
+    accessorKey: "createdAt",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Created" />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className="w-[100px]">
+          {new Date(row.getValue("createdAt")).toLocaleDateString()}
+        </div>
+      );
+    },
+    filterFn: (row, id, value: { operator: string; date: Date }) => {
+      const cellDate = new Date(row.getValue(id));
+      const filterDate = new Date(value.date);
+      
+      switch (value.operator) {
+        case "equals":
+          return cellDate.toDateString() === filterDate.toDateString();
+        case "gt":
+          return cellDate > filterDate;
+        case "lt":
+          return cellDate < filterDate;
+        default:
+          return true;
+      }
+    },
+  },
+  {
+    accessorKey: "dueDate",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Due Date" />
+    ),
+    cell: ({ row }) => {
+      const dueDate = row.getValue("dueDate") as string | undefined;
+      return (
+        <div className="w-[100px]">
+          {dueDate ? new Date(dueDate).toLocaleDateString() : "-"}
+        </div>
+      );
+    },
+    filterFn: (row, id, value: { operator: string; date: Date }) => {
+      const dueDate = row.getValue(id) as string | undefined;
+      if (!dueDate) return false;
+      
+      const cellDate = new Date(dueDate);
+      const filterDate = new Date(value.date);
+      
+      switch (value.operator) {
+        case "equals":
+          return cellDate.toDateString() === filterDate.toDateString();
+        case "gt":
+          return cellDate > filterDate;
+        case "lt":
+          return cellDate < filterDate;
+        default:
+          return true;
+      }
     },
   },
   {

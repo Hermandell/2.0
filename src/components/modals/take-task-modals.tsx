@@ -7,8 +7,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { TakeTaskForm } from "@/components/forms/take-task-form";
 import { TakeTaskFormData } from "@/components/forms/take-task-form/schema";
+import { TakeTaskForm } from "../forms/take-task-form/take-task-form";
 
 interface TakeTaskModalProps {
   isOpen: boolean;
@@ -28,27 +28,20 @@ export function TakeTaskModal({
     const formattedData = {
       taskId,
       taskTitle,
-      date: data.date.toISOString(),
-      time: {
-        hours: String(data.hours).padStart(2, '0'),
-        minutes: String(data.minutes).padStart(2, '0'),
-        seconds: String(data.seconds).padStart(2, '0'),
-      },
-      assignee: data.assignee,
-      notes: data.notes,
+      datetime: data.datetime.toISOString(),
+      username: data.username,
+      username_two: data.username_two,
+      username_three: data.username_three,
+      combobox: data.combobox,
+      switch: data.switch,
     };
 
     // Log the formatted data
-    console.log('Task Take Form Submission:');
-    console.log('------------------------');
-    console.log('Task ID:', formattedData.taskId);
-    console.log('Task Title:', formattedData.taskTitle);
-    console.log('Date:', new Date(formattedData.date).toLocaleDateString());
-    console.log('Time:', `${formattedData.time.hours}:${formattedData.time.minutes}:${formattedData.time.seconds}`);
-    console.log('Assignee:', formattedData.assignee);
-    console.log('Notes:', formattedData.notes);
-    console.log('------------------------');
-    console.log('Raw form data:', data);
+    console.log("Task Take Form Submission:");
+    console.log("------------------------");
+    console.log("Task ID:", formattedData.taskId);
+    console.log("Task Title:", formattedData.taskTitle);
+ 
 
     // Here you would typically make an API call to save the data
     // await saveTaskAssignment(formattedData);
