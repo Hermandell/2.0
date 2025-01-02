@@ -12,7 +12,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { SmartDatetimeInput } from "@/components/ui/smart-datetime-input";
 import { Input } from "@/components/ui/input";
 import {
   Command,
@@ -31,12 +30,13 @@ import { Check, ChevronsUpDown } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { TakeformSchema, type TakeTaskFormData } from "./schema";
 import { languages } from "./config";
+import { DateTimePicker } from "@/components/ui/date-picker";
 
 interface TakeTaskFormProps {
   onSubmit: (data: TakeTaskFormData) => void;
 }
 
-function onSubmit(values: TakeTaskFormData) {
+const onSubmit = (values: TakeTaskFormData) => {
   try {
     console.log(values);
     toast(
@@ -48,14 +48,13 @@ function onSubmit(values: TakeTaskFormData) {
     console.error("Form submission error", error);
     toast.error("Failed to submit the form. Please try again.");
   }
-}
+};
 
 export function TakeTaskForm({ onSubmit }: TakeTaskFormProps) {
-  
   const form = useForm<TakeTaskFormData>({
     resolver: zodResolver(TakeformSchema),
     defaultValues: {
-      datetime: new Date(),
+      datetime: undefined,
       username: "",
       username_two: "",
       username_three: "",
@@ -69,20 +68,16 @@ export function TakeTaskForm({ onSubmit }: TakeTaskFormProps) {
         onSubmit={form.handleSubmit(onSubmit)}
         className="space-y-8 max-w-3xl mx-auto py-10"
       >
+       
         <FormField
           control={form.control}
           name="datetime"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>What's the best time for you?</FormLabel>
+            <FormItem className="flex w-72 flex-col gap-2">
+              <FormLabel htmlFor="datetime">Date time</FormLabel>
               <FormControl>
-                <SmartDatetimeInput
-                  value={field.value}
-                  onValueChange={field.onChange}
-                  placeholder="e.g. Tomorrow morning 9am"
-                />
+                <DateTimePicker value={field.value} onChange={field.onChange} />
               </FormControl>
-              <FormDescription>Please select the full time</FormDescription>
               <FormMessage />
             </FormItem>
           )}

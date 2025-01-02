@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DataTableColumnHeader } from "./data-table-column-header";
 import { DataTableRowActions } from "./data-table-row-actions";
+import { format } from "date-fns";
 
 export const columns: ColumnDef<Task>[] = [
   {
@@ -91,7 +92,7 @@ export const columns: ColumnDef<Task>[] = [
     cell: ({ row }) => {
       return (
         <div className="w-[100px]">
-          {new Date(row.getValue("createdAt")).toLocaleDateString()}
+          {format(new Date(row.getValue("createdAt")), 'MM/dd/yyyy')}
         </div>
       );
     },
@@ -120,8 +121,8 @@ export const columns: ColumnDef<Task>[] = [
       const dueDate = row.getValue("dueDate") as string | undefined;
       return (
         <div className="w-[100px]">
-          {dueDate ? new Date(dueDate).toLocaleDateString() : "-"}
-        </div>
+{dueDate ? format(new Date(dueDate), 'MM/dd/yyyy') : "-"}
+</div>
       );
     },
     filterFn: (row, id, value: { operator: string; date: Date }) => {
