@@ -29,13 +29,16 @@ export function TakeTaskModal({
       taskId,
       taskTitle,
       datetime: data.datetime.toISOString(),
-      username: data.username,
-      username_two: data.username_two,
-      username_three: data.username_three,
-      combobox: data.combobox,
-      switch: data.switch,
+      age: data.age,
+      email: data.email,
+      language: data.language,
+      marketingEmails: data.marketingEmails,
+      name: data.name,
+      plan: data.plan,
+      terms: data.terms
     };
 
+    console.table(formattedData)
     // Log the formatted data
     console.log("Task Take Form Submission:");
     console.log("------------------------");

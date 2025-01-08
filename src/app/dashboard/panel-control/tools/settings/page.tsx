@@ -3,7 +3,6 @@ import { GenericTable } from "@/components/data-table/generic-table";
 import { ViewSelector } from "@/components/view-switcher/view-selector";
 import { useState } from "react";
 import { getMockData } from "@/data/mock-data";
-import { GenericDataResponse } from "@/types/data";
 import { generateColumnsFromData } from "@/utils/table-utils";
 const Settings = () => {
 // prepar despues para que checa las vistas cargadas

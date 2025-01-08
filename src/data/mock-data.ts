@@ -1,4 +1,4 @@
-import { GenericDataResponse } from "@/types/data";
+import { GenericDataResponse } from "@/types/tables/data";
 
 export const getMockData = (view: string): GenericDataResponse => {
   switch (view) {

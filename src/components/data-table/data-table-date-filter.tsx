@@ -2,11 +2,9 @@
 
 import * as React from "react";
 import { Column } from "@tanstack/react-table";
-import { CalendarIcon, PlusCircle } from "lucide-react";
+import { PlusCircle } from "lucide-react";
 import { format } from "date-fns";
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
   PopoverContent,
@@ -20,6 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { DateTimePicker } from "../ui/date-picker";
 
 interface DataTableDateFilterProps<TData, TValue> {
   column?: Column<TData, TValue>;
@@ -46,7 +45,9 @@ export function DataTableDateFilter<TData, TValue>({
     }
   }, [operator, date, column]);
 
-  const filterValue = column?.getFilterValue() as { operator: string; date: Date } | undefined;
+  const filterValue = column?.getFilterValue() as
+    | { operator: string; date: Date }
+    | undefined;
 
   return (
     <Popover>
@@ -59,7 +60,10 @@ export function DataTableDateFilter<TData, TValue>({
               <Separator orientation="vertical" className="mx-2 h-4" />
               <div className="hidden space-x-1 lg:flex">
                 <span className="text-sm">
-                  {operators.find(op => op.value === filterValue.operator)?.label}{" "}
+                  {
+                    operators.find((op) => op.value === filterValue.operator)
+                      ?.label
+                  }{" "}
                   {format(filterValue.date, "PP")}
                 </span>
               </div>
@@ -71,10 +75,7 @@ export function DataTableDateFilter<TData, TValue>({
         <div className="space-y-4">
           <div className="space-y-2">
             <label className="text-sm font-medium">Operator</label>
-            <Select
-              value={operator}
-              onValueChange={setOperator}
-            >
+            <Select value={operator} onValueChange={setOperator}>
               <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>
@@ -89,12 +90,7 @@ export function DataTableDateFilter<TData, TValue>({
           </div>
           <div className="space-y-2">
             <label className="text-sm font-medium">Date</label>
-            <Calendar
-              mode="single"
-              selected={date}
-              onSelect={setDate}
-              className="rounded-md border"
-            />
+            <DateTimePicker granularity="day" value={date} onChange={setDate} />
           </div>
           {filterValue?.date && (
             <Button

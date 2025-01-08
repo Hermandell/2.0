@@ -43,4 +43,10 @@ export const languages = [
     label: "Chinese",
     value: "zh",
   },
-] as const;
+];
+
+export const plans = [
+  { label: "Free", value: "free" },
+  { label: "Pro", value: "pro" },
+  { label: "Enterprise", value: "enterprise" },
+];
