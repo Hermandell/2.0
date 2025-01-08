@@ -63,7 +63,7 @@ const data = {
         },
         {
           title: "Starred",
-          url: "#",
+          url: "/dashboard/panel-control/tools/starred",
         },
         {
           title: "Settings",
